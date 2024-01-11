@@ -1,13 +1,18 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
-export const Product = (props) => {
-  // Từ list product truyền vào product cần hiển thị
+export const Product = () => {
+    const location = useLocation();
+    const { product } = location.state;
+
   let imgPath = "http://103.252.95.181:8000";
-  useEffect(() => {}, [props.product]);
+  useEffect(() => {}, [product]);
+  
   const description = (des) => {
     const textWithDivs = des.split("\r\n\r\n-");
+    console.log(textWithDivs);
     if (textWithDivs) {
       return <div>{textWithDivs[0]}</div>;
     }
@@ -16,29 +21,28 @@ export const Product = (props) => {
   const detail = (des) => {
     const textWithDivs = (
       <ul>
-        {des.split("\r\n\r\n-").slice(1).map((paragraph, index) => (
+        { des.split("\r\n\r\n-").slice(1).map((paragraph, index) => (
         <li key={index}>{paragraph}</li>
         ))}
       </ul>
     );
-    if (textWithDivs > 1) {
+    if (textWithDivs.props.children.length > 0) {
       return textWithDivs;
     }
     return (<div>&lt;No detail&gt;</div>);
   };
   return (
     <div>
-      Product nè
-      {props.product ? (
+      {product ? (
         <div>
-          <h1>{props.product.product_name}</h1>
+          <h1>{product.product_name}</h1>
           <img
-            src={imgPath + props.product.images}
-            alt={props.product.product_name}
+            src={imgPath + product.images}
+            alt={product.product_name}
           />
-          <h1>{props.product.price}</h1>
-          <h1>{description(props.product.description)}</h1>
-          <h1>{detail(props.product.description)}</h1>
+          <h1>{product.price}</h1>
+          <h1>{description(product.description)}</h1>
+          <h1>{detail(product.description)}</h1>
         </div>
       ) : (
         <h1>Product not found</h1>
