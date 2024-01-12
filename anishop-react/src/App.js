@@ -1,10 +1,10 @@
 import './App.css';
 import {Routes, Route,Link} from 'react-router-dom'
 import Signup from './Container/Signup';
-import Login from './Container/Signup';
-import Profile from './Container/Signup';
-import Orders from './Container/Signup';
-import OrderDetail from './Container/Signup';
+import Login from './Container/Login';
+import Profile from './Container/Profile';
+import Orders from './Container/Orders';
+import OrderDetail from './Container/OrderDetail';
 import Home from './Component/Home';
 
 function App() {
