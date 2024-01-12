@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Order from "../Component/Order";
+import Order from "../Components/Order";
 function Orders() {
   const [ordersData, setOrdersData] = useState([]);
   const url = "http://103.252.95.181:8000/get-order/";
