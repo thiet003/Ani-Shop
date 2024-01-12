@@ -1,10 +1,11 @@
 import './App.css';
 import {Routes, Route,Link} from 'react-router-dom'
-import Signup from './Component/Signup/Signup';
-import Home from './Component/Signup/Home';
-import Login from './Component/Signup/Login';
-import Profile from './Component/Profile/Profile';
-
+import Signup from './Container/Signup';
+import Login from './Container/Signup';
+import Profile from './Container/Signup';
+import Orders from './Container/Signup';
+import OrderDetail from './Container/Signup';
+import Home from './Component/Home';
 
 function App() {
     return (
@@ -14,6 +15,8 @@ function App() {
           <Route path='/login' element={<Login/>} />
           <Route path='/signup' element={<Signup/>} />
           <Route path='/profile' element={<Profile/>} />
+          <Route path='/order' element={<Orders/>} />
+          <Route path='/order/:id' element={<OrderDetail/>} />
         </Routes>
       </div>
 

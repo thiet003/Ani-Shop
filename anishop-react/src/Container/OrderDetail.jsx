@@ -1,15 +1,11 @@
 import { useState, useEffect } from "react";
-function Profile() {
-  const [profileData, setProfileData] = useState({
-    email: "",
-    first_name: "",
-    id: 0,
-    isAdmin: false,
-    last_name: "",
-    name: "",
-    username: "",
-  });
-  const url = "http://103.252.95.181:8000/profile/";
+import { Route, Routes, useParams, Link } from "react-router-dom";
+
+function OrderDetail() {
+  const { id } = useParams();
+  console.log(id);
+  const [orderDetailData, setOrderDetailData] = useState({});
+  const url = "http://103.252.95.181:8000/order/" + id;
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
@@ -26,9 +22,9 @@ function Profile() {
         }
         // Xử lý dữ liệu JSON từ phản hồi
         const data = await response.json();
-        
+
         // Cập nhật state với thông tin của profile
-        setProfileData(data);
+        setOrderDetailData(data);
       } catch (error) {
         console.error("Error fetching profile data:", error);
       }
@@ -37,15 +33,17 @@ function Profile() {
     // Gọi hàm fetchProfileData khi component mount
     fetchProfileData();
   }, []);
-  console.log(profileData);
-  console.log(sessionStorage.getItem("token"));
+  console.log(orderDetailData);
   return (
-    <div className="profile">
-      <h5>UserName: {profileData.name}</h5>
-      <h5>FirstName: {profileData.first_name}</h5>
-      <h5>LastName: {profileData.last_name}</h5>
+    <div>
+      <h5>Chi tiết mặt hàng</h5>
+      <div>
+        <p>Dia chi: {orderDetailData.address}</p>
+        <p>SDT: {orderDetailData.number_phone}</p>
+        <p>Note: {orderDetailData.note}</p>
+      </div>
     </div>
   );
 }
 
-export default Profile;
+export default OrderDetail;

@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom'
 import Signup from './Signup';
-import Login from './Login';
+import Login from '../Login/Login';
 function Home() {
     function HandleClick(){
         sessionStorage.setItem("token","");
