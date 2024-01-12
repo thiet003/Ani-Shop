@@ -1,6 +1,6 @@
 import React from "react";
 
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate, Link } from "react-router-dom";
 
 export const Footer = () => {
@@ -22,23 +22,23 @@ export const Footer = () => {
               />
             </div>
             <div className="flex items-center my-3 cursor-pointer">
-              {/* <FontAwesomeIcon
+              <FontAwesomeIcon
                 icon="fa-solid fa-phone"
                 shake
                 size="2xl"
                 style={{ color: "#ffffff" }}
-              /> */}
+              />
               <div className="text-white font-sans font-bold text-2xl ml-3">
                 0123.456.789
               </div>
             </div>
             <div className="flex items-center my-3 cursor-pointer">
-              {/* <FontAwesomeIcon
+              <FontAwesomeIcon
                 icon="fa-solid fa-envelope"
                 shake
                 size="2xl"
                 style={{ color: "#ffffff" }}
-              /> */}
+              />
               <div className="text-white font-sans font-bold text-2xl ml-3">
                 anishop.contact@proptit.com
               </div>
@@ -76,7 +76,7 @@ export const Footer = () => {
             <div className="search-bar relative w-4/5">
               <input className="rounded-lg p-4 ps-10 block w-full text-gray-900 border focus:ring-1 border-gray-300 focus:border-key-secondary-color focus:ring-blue-300 outline-none" type="text" placeholder="Email Address" required/>
               <button className="absolute end-2.5 bottom-2.5 font-medium rounded-lg text-sm px-4 py-2 bg-blue-400 text-white focus:outline-none focus:ring-blue-300 focus:ring-1 hover:bg-blue-500" type="button" onClick={handleClick}>
-              {/* <FontAwesomeIcon icon="fa-solid fa-arrow-right" fade size="lg" style={{color: "#ffffff",}} /> */}
+              <FontAwesomeIcon icon="fa-solid fa-arrow-right" fade size="lg" style={{color: "#ffffff",}} />
               </button>
             </div>
           </div>
