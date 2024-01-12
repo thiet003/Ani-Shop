@@ -14,11 +14,24 @@ function Paging({itemsPerPage, totalItems, setPage}) {
         </button>
     ));
 
+    function handleClick(c){
+        if (c == "<") {
+            setPage(prev => {
+                if(prev > 1) return prev - 1;
+            })
+        }
+        else {
+            setPage(prev => {
+                if(prev < pageNumbers.length) return prev + 1;
+            })
+        }
+    }
+
     return (
         <div>
-            <button onClick={() => setPage(prev => prev - 1)}>{"<"}</button>
+            <button onClick={handleClick}>{"<"}</button>
             {pageButtons}
-            <button onClick={() => setPage(prev => prev + 1)}>{">"}</button>
+            <button onClick={handleClick}>{">"}</button>
         </div>
     );
 }

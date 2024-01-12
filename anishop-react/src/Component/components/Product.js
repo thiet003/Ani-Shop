@@ -3,14 +3,14 @@ import React from 'react';
 
 
 //structure of a product
-function Product({product}) {
-    const {id, product_name, description, price, images, stock, created_date, modified_date, catagory} = product;
-
+function Product(product) {
+    
+    
     return (
         <>
-            <h3>{product_name}</h3>
-            <p>{description}</p>
-            <p>{price}</p>
+            <h3>{product.product_name}</h3>
+            <p>{product.description}</p>
+            <p>{product.price}</p>
         </>
     );
 }
