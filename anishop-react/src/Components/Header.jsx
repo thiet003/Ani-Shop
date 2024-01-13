@@ -36,7 +36,7 @@ export const Header = () => {
       </header>
       </div>
       <div className="py-5 flex justify-center content-center items-center flex-col bg-white">
-        <nav className="flex lg:w-4/5 w-full">
+        <nav className="flex lg:w-4/5 w-full text-center">
             <div className="w-1/5"><Link to="/">HOME</Link></div>
             <div className="w-1/5"><Link to="/shop">SHOP</Link></div>
             <div className="w-1/5"><Link to="/cart">CART</Link></div>

@@ -3,7 +3,6 @@ import SearchBar from "./SearchBar";
 import Sort from "./Sort";
 import Paging from "./Paging";
 import Category from "./Category";
-import axios from "axios";
 
 export const ProductList = () => {
     const [data, setData] = useState([]);
@@ -45,50 +44,27 @@ export const ProductList = () => {
     };
     useEffect(() => {
         fetchData();
-    }, []);
-    console.log("done");
-    console.log(products);
-
-
-    // async fetch data
-    let url = "http://103.252.95.181:8000/products/?format=json";
-    // async function fetchData1() {
-    //     try {
-    //         const response = await axios.get(url);
-    //         console.log(response);
-    //         setData(response.data);
-    //         console.log("oke");
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
-
-    // // fetch data to get allProducts from API
-    // useEffect(() => {
-    //     fetchData1();
-    //     setProducts(data);
-    // }, []);
-    // console.log(products);
-
-    url = "http://103.252.95.181:8000/categories/?format=json";
-
-    async function fetchData2() {
-        try {
-            const response = await axios.get(url);
-            console.log(response);
-            setData(response.data);
-            console.log("oke");
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    //fetch data to get allCategories from API
-    useEffect(() => {
-        fetchData2("http://103.252.95.181:8000/categories/?format=json")
-        setCategories(data);
+        fetchData2();
     }, []);
 
+
+    const fetchData2 = () => {
+        console.log("product");
+        fetch("http://103.252.95.181:8000/categories/")
+        .then((Response) => {
+            if (!Response.ok) {
+            throw new Error("Error");
+            }
+            return Response.json();
+        })
+        .then((data) => {
+            setCategories(data);
+            console.log(data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    };
     // filter products by search and category
     useEffect(() => {
         const filted = products.filter((product) => {

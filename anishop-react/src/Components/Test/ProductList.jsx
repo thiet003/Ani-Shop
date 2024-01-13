@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Product } from "../../Container/Product";
 import { useNavigate, Link } from "react-router-dom";
 
 export const ProductList = (props) => {
@@ -38,17 +37,19 @@ export const ProductList = (props) => {
     }
   });
   return (
-    <div className="grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 m-4">
-      {myData.map((product) => (
-        <div key={product.id} className="border p-4 m-4 hover:scale-105 hover:bg-gray-400 transition-all duration-150 ease-in-out rounded-3xl cursor-pointer" onClick={() => handleClick(product)}>
-          <img className="max-w-full rounded-3xl"
-            src={imgPath + product.images}
-            alt={product.product_name}
-          />
-          <h1>{product.product_name}</h1>
-          <h1>{product.price}</h1>
-        </div>
-      ))}
+    <div className="relative">
+      <div className="grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 m-4">
+        {myData.map((product) => (
+          <div key={product.id} className="border p-4 m-4 hover:scale-105 hover:bg-gray-400 transition-all duration-150 ease-in-out rounded-3xl cursor-pointer" onClick={() => handleClick(product)}>
+            <img className="max-w-full rounded-3xl"
+              src={imgPath + product.images}
+              alt={product.product_name}
+            />
+            <h1>{product.product_name}</h1>
+            <h1>{product.price}</h1>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
