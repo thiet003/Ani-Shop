@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Order from "../Components/Order";
+import orders from "../Container/Css/Orders.module.css";
 function Orders() {
   const [ordersData, setOrdersData] = useState([]);
   const url = "http://103.252.95.181:8000/get-order/";
@@ -44,9 +45,17 @@ function Orders() {
     </div>
   );
   return (
-    <div className="orders">
-        <h3>My Orders</h3>
-      <OrderList orders={ordersData} />;
+    <div className={orders.orders}>
+      <h3 className={orders.heading}>My Orders</h3>
+      <div className={orders.orders_content}>
+        <div className={orders.col}>
+          <p className={orders.order}>Order</p>
+          <p className={orders.status}>Status</p>
+          <p className={orders.time}>Time Placed</p>
+          <p className={orders.total_price}>Total Price</p>
+        </div>
+        <OrderList className={orders.list} orders={ordersData} />;
+      </div>
     </div>
   );
 }

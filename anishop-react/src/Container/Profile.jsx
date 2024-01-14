@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
+import profile from "./Css/Profile.module.css";
 function Profile() {
+  function HandleClick(){
+    sessionStorage.setItem("token","");
+    window.location.href = "/login";
+  }
   const [profileData, setProfileData] = useState({
     email: "",
     first_name: "",
@@ -13,6 +18,9 @@ function Profile() {
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
+        if (sessionStorage.getItem("token") === "") {
+          window.location.href = "/login";
+        }
         // Gọi API để lấy thông tin của profile
         const response = await fetch(url, {
           method: "GET",
@@ -40,11 +48,58 @@ function Profile() {
   console.log(profileData);
   console.log(sessionStorage.getItem("token"));
   return (
-    <div className="profile">
-      <h3>My Profile</h3>
-      <h5>UserName: {profileData.name}</h5>
-      <h5>FirstName: {profileData.first_name}</h5>
-      <h5>LastName: {profileData.last_name}</h5>
+    <div className={profile.profile}>
+      <h3 className={profile.heading}>My Profile</h3>
+      <button onClick={HandleClick}>Đăng xuất</button>
+      <div className={profile.profile_content}>
+        <div className={profile.profile_left}>
+          <img
+            src="https://img.icons8.com/bubbles/100/000000/user.png"
+            alt=""
+          />
+          <h4>{profileData.username}</h4>
+        </div>
+        <div className={`${profile.profile_item} ${profile.profile_item_l}`}>
+          <h5>Information</h5>
+          <div>
+            <h6>First Name:</h6>
+            <p>{profileData.first_name}</p>
+          </div>
+          <div>
+            <h6>Last Name:</h6>
+            <p>{profileData.last_name}</p>
+          </div>
+          <div>
+            <h6>Email:</h6>
+            <p>{profileData.email}</p>
+          </div>
+          <div>
+            <h6>Phone:</h6>
+            <p>0987654321</p>
+          </div>
+          <a href="/orders">Sửa profile</a>
+        </div>
+        <div className={profile.profile_item}>
+          <h5>Orders</h5>
+          <div>
+            <h6>Pending:</h6>
+            <p>50</p>
+          </div>
+          <div>
+            <h6>Shipping:</h6>
+            <p>50</p>
+          </div>
+          <div>
+            <h6>Delivered:</h6>
+            <p>50</p>
+          </div>
+          <div>
+            <h6>Cancelled:</h6>
+            <p>50</p>
+          </div>
+          <a href="/orders">Xem chi tiết</a>
+        </div>
+      </div>
     </div>
   );
 }

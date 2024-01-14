@@ -1,6 +1,13 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect, axios } from "react";
+import login from './Css/Login.module.css';
+import logo from '../asset/img/Logo.png'
 function Login() {
+  if(sessionStorage.getItem("token")!=="")
+  {
+      window.location.href = "/profile";
+  }
+  
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -28,50 +35,42 @@ function Login() {
           return response.json();
         })
         .then((data) => {
-          setMessage("Dang nhap thanh cong");
-          // console.log("Success:", data); // Xử lý dữ liệu JSON từ phản hồi ở đây
           sessionStorage.setItem("token", data.token);
           console.log(data.token); // lay token
-          window.location.href= '/';
+          window.location.href = "/";
         })
         .catch((error) => {
-          setMessage("Dang nhap that bai");
+          setMessage("Sai tên đăng nhập hoặc mật khẩu");
           console.log("Token", sessionStorage.getItem("token")); // lay token
           console.error("Error:", error); // Xử lý lỗi ở đây
         });
     } catch (error) {}
   };
   return (
-    <div className="login" style={{ marginLeft: 100 }}>
-      <h3>Login</h3>
+    <div className="p-8 m-8 rounded-md shadow-xl">
+      <img className={login.login_img} src={logo} alt="" />
+      <h3 className={login.heading}>Login</h3>
       <form onSubmit={handleSubmit}>
-        <input
+        <input className={login.input} required
           type="text"
           placeholder="UserName"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        <br />
-        <input
+        <input className={login.input}
+          required
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <br />
-        <a href="">Forgot password?</a>
-        <br />
-        <button type="submit">Login</button>
+        {message && <p className={login.message}>{message}</p>}
+        <button className={login.login_button} type="submit">Login</button>
       </form>
-      {message && <p>{message}</p>}
       <Link to="/signup">
-        <p>Do not have an account? Register</p>
+        <p className={login.to_register}>Do not have an account? Register</p>
       </Link>
-
-      <div>
-        <br />
-        <Link to="/">Home</Link>
-      </div>
+      <a className={login.forgot_pass} href="">Forgot password?</a>
     </div>
   );
 }

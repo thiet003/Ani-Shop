@@ -1,5 +1,7 @@
 import { useState, useEffect, axios } from "react";
 import { Link } from "react-router-dom";
+import logo from '../asset/img/Logo.png'
+import signup from './Css/Signup.module.css';
 function Signup() {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -34,63 +36,64 @@ function Signup() {
           return response.json();
         })
         .then((data) => {
-          setMessage("Dang ki thanh cong");
-          console.log("Success:", data); // Xử lý dữ liệu JSON từ phản hồi ở đây
+          // console.log("Success:", data); // Xử lý dữ liệu JSON từ phản hồi ở đây
           sessionStorage.setItem("token", data.token);
-          console.log(data.token); // lay token
+          // console.log(data.token); // lay token
           window.location.href= '/';
         })
         .catch((error) => {
-          setMessage("Dang ki that bai");
+          setMessage("Username đã được sử dụng!");
           sessionStorage.setItem("token", "");
           console.error("Error:", error); // Xử lý lỗi ở đây
         });
     } catch (error) {}
   };
   return (
-    <div className="signup" style={{ marginLeft: 500 }}>
-      <h3>Signup</h3>
+    <div className="p-8 m-8 rounded-md shadow-xl max-w-lg">
+      <img className={signup.signup_img} src={logo} alt="" />
+    
+      <h3 className={signup.heading}>Signup</h3>
       <form onSubmit={handleSubmit}>
-        <input
+        <input className={signup.input}
+          required
           type="text"
           placeholder="FirstName"
           value={firstname}
           onChange={(e) => setFirstname(e.target.value)}
         />
-        <br />
-        <input
+        <input className={signup.input}
+          required
           type="text"
           placeholder="LastName"
           value={lastname}
           onChange={(e) => setLastname(e.target.value)}
         />
-        <br />
-        <input
+        <input className={signup.input}
+          required
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <br />
-        <input
+        <input className={signup.input}
+          required
           type="text"
           placeholder="UserName"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        <br />
-        <input
+        <input className={signup.input}
+          required
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <br />
-        <button type="submit">Signup</button>
+        <button className={signup.signup_button} type="submit">Signup</button>
       </form>
-      {message && <p>{message}</p>}
+      {message && <p className={signup.message}>{message}</p>}
       <Link to="/login">
-        <p>Already have an account? Login</p>
+        <p className={signup.to_login}>Already have an account? Login</p>
       </Link>
     </div>
   );
