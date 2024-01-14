@@ -1,4 +1,4 @@
-import { useState, useEffect, axios } from "react";
+import React, { useState, useEffect, axios } from "react";
 import { Link } from "react-router-dom";
 function Signup() {
   const [firstname, setFirstname] = useState("");

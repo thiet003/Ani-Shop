@@ -2,8 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 // import { ProductList } from "./Components/Test/ProductList";
 import { ProductList } from "./Components/ProductList";
-
-
+import React from "react";
 
 import {Routes, Route,Link} from 'react-router-dom'
 import Signup from './Container/Signup';
@@ -18,9 +17,11 @@ import { Product } from "./Container/Product";
 
 import { Header } from "./Components/Header";
 import { Footer } from "./Components/Footer";
+
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
-import { faTwitter, faFontAwesome } from '@fortawesome/free-brands-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+import { faTwitter, faFontAwesome, fab} from '@fortawesome/free-brands-svg-icons'
 
 library.add(fas, faTwitter, faFontAwesome)
 function App() {

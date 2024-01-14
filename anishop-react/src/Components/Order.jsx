@@ -1,3 +1,5 @@
+import React from "react";
+
 function Order({ id, created_at, total_price }) {
     return (
         <div>
