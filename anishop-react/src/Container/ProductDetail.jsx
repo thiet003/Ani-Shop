@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { DeliveryOption } from "../Components/DeliveryOption";
+import { AnimatedBackground } from './AnimatedBackground/AnimatedBackground';
 // import { LocationSelector } from "../Components/LocationSelector";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -77,9 +78,9 @@ export const ProductDetail = () => {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   };
   return (
-    <div className="flex justify-center items-center w-full bg-gray-200">
+    <div className="flex justify-center items-center w-full bg-transparent">
       {product ? (
-        <div className="bg-gray-200 my-10 grid grid-cols-1 grid-rows-2 gap-1 2xl:max-w-screen-2xl xl:max-w-screen-xl ">
+        <div className="bg-transparent my-10 grid grid-cols-1 grid-rows-2 gap-1 2xl:max-w-screen-2xl xl:max-w-screen-xl ">
           <div className="grid grid-cols-3 mb-7 bg-white rounded-[98px]">
             {/* Ảnh sản phẩm */}  
             <div className="p-10">
@@ -110,7 +111,9 @@ export const ProductDetail = () => {
               </div>
             </div>
             {/* Địa chỉ giao hàng */}
+            <div className="relative">
               <DeliveryOption />
+              </div>
           </div>
           {/* Mô tả chi tiết */}
           <div className="grid grid-cols-5 grid-rows-3">
@@ -127,6 +130,7 @@ export const ProductDetail = () => {
       ) : (
         <h1>Product not found</h1>
       )}
+      <AnimatedBackground />
     </div>
   );
 };
