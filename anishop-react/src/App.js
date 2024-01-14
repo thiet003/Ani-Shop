@@ -1,8 +1,10 @@
 import logo from "./logo.svg";
 import "./App.css";
+
 // import { ProductList } from "./Components/Test/ProductList";
 import { ProductList } from "./Components/ProductList";
 import React from "react";
+
 
 import {Routes, Route,Link} from 'react-router-dom'
 import Signup from './Container/Signup';
@@ -13,7 +15,7 @@ import OrderDetail from './Container/OrderDetail';
 
 import { Home } from "./Container/Home";
 import { Shop } from "./Container/Shop";
-import { Product } from "./Container/Product";
+import { ProductDetail } from "./Container/ProductDetail";
 
 import { Header } from "./Components/Header";
 import { Footer } from "./Components/Footer";
@@ -23,7 +25,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { faTwitter, faFontAwesome, fab} from '@fortawesome/free-brands-svg-icons'
 
-library.add(fas, faTwitter, faFontAwesome)
+library.add(fas, far, faTwitter, faFontAwesome, fab)
 function App() {
   return (
     <div>
@@ -34,7 +36,7 @@ function App() {
           <Route path="/shop" element={<ProductList />}/>
           <Route path="/cart" />
           <Route path="/contact_us" />
-          <Route path="/product" element={<Product />} />
+          <Route path="/product" element={<ProductDetail />} />
           <Route path="/login" />
         </Routes>
       </div>

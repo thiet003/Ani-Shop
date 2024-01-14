@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 
-export const LocationSelector = ({myLocation, locationUpdate}) => {
-  console.log(myLocation);
+export const LocationSelector = ({ myLocation, locationUpdate }) => {
   const [cities, setCities] = useState([]);
-  const [selectedCity, setSelectedCity] = useState(myLocation.cityId);
+  const [selectedCity, setSelectedCity] = useState("");
 
   const [districts, setDistricts] = useState([]);
-  const [selectedDistrict, setSelectedDistrict] = useState(myLocation.districtId);
+  const [selectedDistrict, setSelectedDistrict] = useState("");
 
   const [wards, setWards] = useState([]);
-  const [selectedWard, setSelectedWard] = useState(myLocation.wardId);
-  
+  const [selectedWard, setSelectedWard] = useState("");
+
   const fetchData = () => {
-    fetch("https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json")
+    fetch(
+      "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json"
+    )
       .then((Response) => {
         if (!Response.ok) {
           throw new Error("Error");
@@ -32,12 +33,15 @@ export const LocationSelector = ({myLocation, locationUpdate}) => {
   }, []);
 
   const handleCityChange = (e) => {
+    console.log(e.target.value);
     const selectedCityId = e.target.value;
     setSelectedCity(selectedCityId);
-
+    console.log(cities);
     const selectedCityData = cities.find((city) => city.Id === selectedCityId);
+    console.log(selectedCityData);
     if (selectedCityData) {
       setDistricts(selectedCityData.Districts || []);
+      console.log("IT WORKS");
     }
   };
 
@@ -47,60 +51,95 @@ export const LocationSelector = ({myLocation, locationUpdate}) => {
 
     const selectedCityData = cities.find((city) => city.Id === selectedCity);
     if (selectedCityData) {
-      const selectedDistrictData = selectedCityData.Districts.find((district) => district.Id === selectedDistrictId) || [];
+      const selectedDistrictData =
+        selectedCityData.Districts.find(
+          (district) => district.Id === selectedDistrictId
+        ) || [];
       setWards(selectedDistrictData.Wards || []);
     }
   };
-  
+
+  const handleWardChange = (e) => {
+    const selectedWardId = e;
+    setSelectedWard(selectedWardId);
+
+    console.log("ABC" + selectedCity + selectedDistrict + selectedWard);
+    const selectedCityData =
+      cities.find((city) => city.Id === selectedCity) || {};
+    const selectedDistrictData =
+      selectedCityData.Districts.find(
+        (district) => district.Id === selectedDistrict
+      ) || {};
+    const selectedWardData =
+      selectedDistrictData.Wards.find((ward) => ward.Id === selectedWardId) || {};
+
+    const locationInfo = {
+      city: selectedCityData.Name,
+      cityId: selectedCity,
+      district: selectedDistrictData.Name,
+      districtId: selectedDistrict,
+      ward: selectedWardData.Name,
+      wardId: selectedWardId,
+    };
+    locationUpdate(locationInfo);
+  };
 
   return (
     <div className="flex flex-col">
-      <select className="form-select form-select-sm mb-3" value={selectedCity} onChange={handleCityChange} >
-        <option value="" selected> Chọn tỉnh thành </option>
-        {cities.map((city) => (
-          <option className="bg-red-100" key={city.Id} value={city.Id}>
-            {city.Name}
-          </option>
-        ))}
-      </select>
-
-      {selectedCity && ( <select className="form-select form-select-sm mb-3" value={selectedDistrict} onChange={handleDistrictChange} >
-          <option value="" selected> Chọn quận huyện </option>
-          {districts.map((district) => (
-            <option key={district.Id} value={district.Id}>
-              {district.Name}
-            </option>
-          ))}
-        </select>
-      )}
-
-      {selectedDistrict && ( <select className="form-select form-select-sm" value={selectedWard} onChange={(e) => setSelectedWard(e.target.value)} >
-          <option value="" selected> Chọn phường xã </option>
-          {wards.map((ward) => (
-            <option key={ward.Id} value={ward.Id}>
-              {ward.Name}
-            </option>
-          ))}
-        </select>
-      )}
-
-      <button className="p-2 m-3 border" onClick={() => {
-        const selectedCityData = cities.find((city) => city.Id === selectedCity) || {};
-        const selectedDistrictData = selectedCityData.Districts.find((district) => district.Id === selectedDistrict) || {};
-        const selectedWardData = selectedDistrictData.Wards.find((ward) => ward.Id === selectedWard) || {};
-
-        const locationInfo = {
-          city: selectedCityData.Name,
-          cityId: selectedCity,
-          district: selectedDistrictData.Name,
-          districtId: selectedDistrict,
-          ward: selectedWardData.Name,
-          wardId: selectedWard,
-        };
-        locationUpdate(locationInfo);
-      }}>LƯU</button>
+      <div className="h-60 overflow-auto">
+        {!selectedCity && (
+          <div value={selectedCity}>
+            <ul>
+              {cities.map((city) => (
+                <li
+                  className="cursor-pointer border-b-2 py-2"
+                  key={city.Id}
+                  onClick={() =>
+                    handleCityChange({ target: { value: city.Id } })
+                  }
+                >
+                  {city.Name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {selectedCity && !selectedDistrict && (
+          <div value={selectedDistrict}>
+            <ul>
+              {districts.map((district) => (
+                <li
+                  className="cursor-pointer border-b-2 py-2"
+                  key={district.Id}
+                  value={district.Id}
+                  onClick={() =>
+                    handleDistrictChange({ target: { value: district.Id } })
+                  }
+                >
+                  {district.Name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {selectedCity && selectedDistrict && !selectedWard && (
+          <div value={selectedWard}>
+            <ul>
+              {wards.map((ward) => (
+                <li
+                  className="cursor-pointer border-b-2 py-2"
+                  key={ward.Id}
+                  value={ward.Id}
+                  onClick={() => handleWardChange(ward.Id)}
+                >
+                  {ward.Name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+      
     </div>
   );
 };
-
-

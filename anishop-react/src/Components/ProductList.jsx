@@ -2,10 +2,11 @@ import React, {useState, useEffect} from "react";
 import SearchBar from "./SearchBar";
 import Sort from "./Sort";
 import Paging from "./Paging";
+
 import Category from "./Category" ;
 import { useSearchParams, useNavigate } from "react-router-dom";
 
-// export 
+
 
 export const ProductList = () => {
     const [products, setProducts] = useState([]);
@@ -52,6 +53,7 @@ export const ProductList = () => {
     };
     useEffect(() => {
         fetchData();
+
     }, []);
     console.log("done");
     console.log(products);
@@ -84,6 +86,8 @@ export const ProductList = () => {
         fetchData2();
     }, []);
 
+
+    
     // filter products by search and category
     useEffect(() => {
         setQuery(searchParams.get("search") || "");
