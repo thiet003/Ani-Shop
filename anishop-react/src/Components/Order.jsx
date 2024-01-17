@@ -1,4 +1,6 @@
 import order from '../Container/Css/Order.module.css'
+import React from "react";
+
 function Order({ id, created_at, total_price }) {
     return (
         <div className={order.content}>

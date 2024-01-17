@@ -2,12 +2,13 @@ import React, {useState, useEffect} from "react";
 import SearchBar from "./SearchBar";
 import Sort from "./Sort";
 import Paging from "./Paging";
-import Category from "./Category";
-import axios from "axios";
+
+import Category from "./Category" ;
+import { useSearchParams, useNavigate } from "react-router-dom";
+
+
 
 export const ProductList = () => {
-    const [data, setData] = useState([]);
-
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]); 
     const [search, setSearch] = useState("");
@@ -15,6 +16,9 @@ export const ProductList = () => {
     const [currentPage, setPage] = useState(1); // [1, 2, 3, 4, 5
     const [itemsPerPage, setItemsPerPage] = useState(12); // chua co set itemperpage
     const [categories, setCategories] = useState([]);
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [query, setQuery] = useState(searchParams.get("search") || "");
     
     // id of selected category
     // 0 - all
@@ -24,7 +28,11 @@ export const ProductList = () => {
     // 4 - nghe nhạc
     const [selectedCategory, setSelectedCategory] = useState(0);
 
-    const [myData, setMyData] = useState([]);
+    const navigate = useNavigate();
+    const handleClick = (product) => {
+        navigate("/product", { state: { product } });
+    };
+    
     let imgPath = "http://103.252.95.181:8000";
     const fetchData = () => {
         console.log("product");
@@ -45,52 +53,45 @@ export const ProductList = () => {
     };
     useEffect(() => {
         fetchData();
+
     }, []);
     console.log("done");
     console.log(products);
 
 
-    // async fetch data
+    // fetch catagory 
     let url = "http://103.252.95.181:8000/products/?format=json";
-    // async function fetchData1() {
-    //     try {
-    //         const response = await axios.get(url);
-    //         console.log(response);
-    //         setData(response.data);
-    //         console.log("oke");
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
-
-    // // fetch data to get allProducts from API
-    // useEffect(() => {
-    //     fetchData1();
-    //     setProducts(data);
-    // }, []);
-    // console.log(products);
+    const fetchData2 = () => {
+        console.log("Categories");
+        fetch("http://103.252.95.181:8000/categories/")
+        .then((Response) => {
+            if (!Response.ok) {
+            throw new Error("Error");
+            }
+            return Response.json();
+        })
+        .then((data) => {
+            setCategories(data);
+            console.log(data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    };
 
     url = "http://103.252.95.181:8000/categories/?format=json";
 
-    async function fetchData2() {
-        try {
-            const response = await axios.get(url);
-            console.log(response);
-            setData(response.data);
-            console.log("oke");
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
     //fetch data to get allCategories from API
     useEffect(() => {
-        fetchData2("http://103.252.95.181:8000/categories/?format=json")
-        setCategories(data);
+        fetchData2();
     }, []);
 
+
+    
     // filter products by search and category
     useEffect(() => {
+        setQuery(searchParams.get("search") || "");
+        query && setSearch(query);
         const filted = products.filter((product) => {
             if (selectedCategory === 0) {
                 return product.product_name.toLowerCase().includes(search.toLowerCase());
@@ -102,7 +103,7 @@ export const ProductList = () => {
             }
         });
         setFilteredProducts(filted);
-    }, [search, selectedCategory, products]);
+    }, [search, selectedCategory, products, query]);
 
     // sort products
     useEffect(() => {
@@ -130,22 +131,29 @@ export const ProductList = () => {
 
     return (
         <>
-            <SearchBar setSearch={setSearch} />
+            {/* <SearchBar setSearch={setSearch} /> */}
             <Category categories={categories} setSelectedCategory={setSelectedCategory} />
             <Sort setSort={setSort} />
-            <ul>
-                {currentProducts.map((product) => (
-                    // <Product props={product} />
-                    <>
-                        <h4>{product.product_name}</h4>
-                        <div>{product.price}</div>
-                    </>
+
+            <div className="grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4 m-4">
+                {currentProducts.slice(indexOfFirstProduct, indexOfLastProduct).map((product) => (
+                    <div key={product.id} className="border p-4 m-4 hover:scale-105 hover:bg-gray-400 transition-all duration-150 ease-in-out rounded-3xl cursor-pointer" onClick={() => handleClick(product)}>
+                    <img className="max-w-full rounded-3xl"
+                        src={imgPath + product.images}
+                        alt={product.product_name}
+                    />
+                    <h1>{product.product_name}</h1>
+                    <h1>{product.price}</h1>
+                    </div>
                 ))}
-            </ul>
+            </div>
+
             <Paging
                 itemsPerPage={itemsPerPage}
                 totalItems={filteredProducts.length}
                 setPage={setPage}
+                setItemsPerPage={setItemsPerPage}
+                currentPage={currentPage}
             />
         </>
     )

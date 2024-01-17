@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import profile from "./Css/Profile.module.css";
+import React, { useState, useEffect } from "react";
 function Profile() {
   function HandleClick(){
     sessionStorage.setItem("token","");
