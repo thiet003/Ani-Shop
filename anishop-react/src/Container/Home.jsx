@@ -4,7 +4,7 @@ import { AnimatedBackground } from './AnimatedBackground/AnimatedBackground';
 
 export const Home = () => {
   return (
-    <div className='bg-[#fe8572] w-full justify-center items-center flex'>
+    <div className='bg-tranparent w-full justify-center items-center flex h-[150rem]'>
 
         {/* <YourSvg /> */}
         <AnimatedBackground />
