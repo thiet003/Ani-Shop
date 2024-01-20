@@ -19,6 +19,13 @@ export const Header = () => {
     console.log("Search button clicked!");
   };
 
+  const scrollToQA = () => {
+    window.scrollTo({ top: 100, left: 0, behavior: 'smooth' });
+  };
+  // const scrollToTop = () => {
+  //   window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  // };
+  // scrollToTop();
   return (
     <div className="w-screen z-[9999]">
       <div className="py-5 flex justify-center content-center items-center flex-col bg-key-primary-color">
@@ -66,12 +73,12 @@ export const Header = () => {
             ["Cart", "/cart"],
             ["Contact Us", "/contact_us"],
           ].map(([title, link]) => (
-            <div className="w-1/5 py-5 text-lg hover:text-key-primary-color hover:bg-gray-100 hover:font-bold transition-all duration-150 ease-in-out">
-              <Link to={link}>{title}</Link>
+            <div className="w-1/5 text-lg hover:text-key-primary-color hover:bg-gray-100 hover:font-bold transition-all duration-150 ease-in-out">
+              <Link className="block w-full h-full py-5" to={link}>{title}</Link>
             </div>
           ))}
-          <div className="w-1/5 py-5 text-lg hover:text-key-primary-color hover:bg-gray-100 hover:font-bold transition-all duration-150 ease-in-out">
-            <Link to="/">Q&A</Link>
+          <div className="w-1/5 text-lg hover:text-key-primary-color hover:bg-gray-100 hover:font-bold transition-all duration-150 ease-in-out" >
+            <Link className="block w-full h-full py-5" to="/">Q&A</Link>
           </div>
         </nav>
       </div>

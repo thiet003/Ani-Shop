@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCity, setDistrict, setWard, setCities, setDistricts, setWards, resetState  } from "../Redux/Slices/AddressSlice";
 
 export const LocationSelector = ({ myLocation, locationUpdate }) => {
-  const [cities, setCities] = useState([]);
-  const [selectedCity, setSelectedCity] = useState("");
 
-  const [districts, setDistricts] = useState([]);
-  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const dispatch = useDispatch();
 
-  const [wards, setWards] = useState([]);
-  const [selectedWard, setSelectedWard] = useState("");
-
+  const cities = useSelector((state) => state.Address.cities);
+  const districts = useSelector((state) => state.Address.districts);
+  const wards = useSelector((state) => state.Address.wards);
+  const selectedCity = useSelector((state) => state.Address.selectedCity);
+  const selectedDistrict = useSelector((state) => state.Address.selectedDistrict);
+  const selectedWard = useSelector((state) => state.Address.selectedWard);
+  
   const fetchData = () => {
     fetch(
       "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json"
@@ -21,7 +24,7 @@ export const LocationSelector = ({ myLocation, locationUpdate }) => {
         return Response.json();
       })
       .then((data) => {
-        setCities(data);
+        dispatch(setCities(data));
         console.log(data);
       })
       .catch((error) => {
@@ -30,24 +33,24 @@ export const LocationSelector = ({ myLocation, locationUpdate }) => {
   };
   useEffect(() => {
     fetchData();
-  }, []);
+    return () => {
+      dispatch(resetState());
+    };
+  }, [dispatch]);
 
   const handleCityChange = (e) => {
-    console.log(e.target.value);
     const selectedCityId = e.target.value;
-    setSelectedCity(selectedCityId);
-    console.log(cities);
+    dispatch(setCity(selectedCityId));
+
     const selectedCityData = cities.find((city) => city.Id === selectedCityId);
-    console.log(selectedCityData);
     if (selectedCityData) {
-      setDistricts(selectedCityData.Districts || []);
-      console.log("IT WORKS");
+      dispatch(setDistricts(selectedCityData.Districts || []));
     }
   };
 
   const handleDistrictChange = (e) => {
     const selectedDistrictId = e.target.value;
-    setSelectedDistrict(selectedDistrictId);
+    dispatch(setDistrict(selectedDistrictId));
 
     const selectedCityData = cities.find((city) => city.Id === selectedCity);
     if (selectedCityData) {
@@ -55,15 +58,14 @@ export const LocationSelector = ({ myLocation, locationUpdate }) => {
         selectedCityData.Districts.find(
           (district) => district.Id === selectedDistrictId
         ) || [];
-      setWards(selectedDistrictData.Wards || []);
+      dispatch(setWards(selectedDistrictData.Wards || []));
     }
   };
 
   const handleWardChange = (e) => {
     const selectedWardId = e;
-    setSelectedWard(selectedWardId);
+    dispatch(setWard(selectedWardId));
 
-    console.log("ABC" + selectedCity + selectedDistrict + selectedWard);
     const selectedCityData =
       cities.find((city) => city.Id === selectedCity) || {};
     const selectedDistrictData =
