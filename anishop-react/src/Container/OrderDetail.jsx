@@ -1,12 +1,16 @@
 import React ,{ useState, useEffect } from "react";
-import { Route, Routes, useParams, Link } from "react-router-dom";
+import { Route, Routes, useParams, Link, useNavigate } from "react-router-dom";
 
 function OrderDetail() {
+  let navigate = useNavigate();
   const { id } = useParams();
   console.log(id);
   const [orderDetailData, setOrderDetailData] = useState({});
   const url = "http://103.252.95.181:8000/order/" + id;
   useEffect(() => {
+    if (sessionStorage.getItem("token") == null) {
+      navigate("/login");
+    }
     const fetchProfileData = async () => {
       try {
         // Gọi API để lấy thông tin của profile

@@ -1,8 +1,14 @@
 import React, { useState, useEffect, axios } from "react";
-import { Link } from "react-router-dom";
-import logo from '../asset/img/Logo.png'
-import signup from './Css/Signup.module.css';
+import { Link, useNavigate } from "react-router-dom";
+import logo from "../asset/img/Logo.png";
+import signup from "./Css/Signup.module.css";
 function Signup() {
+  let navigate = useNavigate();
+  useEffect(() => {
+    if (sessionStorage.getItem("token") != null) {
+      navigate("/");
+    }
+  });
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -39,7 +45,7 @@ function Signup() {
           // console.log("Success:", data); // Xử lý dữ liệu JSON từ phản hồi ở đây
           sessionStorage.setItem("token", data.token);
           // console.log(data.token); // lay token
-          window.location.href= '/';
+          window.location.href = "/";
         })
         .catch((error) => {
           setMessage("Username đã được sử dụng!");
@@ -51,45 +57,52 @@ function Signup() {
   return (
     <div className="p-8 m-8 rounded-md shadow-xl max-w-lg">
       <img className={signup.signup_img} src={logo} alt="" />
-    
+
       <h3 className={signup.heading}>Signup</h3>
       <form onSubmit={handleSubmit}>
-        <input className={signup.input}
+        <input
+          className={signup.input}
           required
           type="text"
           placeholder="FirstName"
           value={firstname}
           onChange={(e) => setFirstname(e.target.value)}
         />
-        <input className={signup.input}
+        <input
+          className={signup.input}
           required
           type="text"
           placeholder="LastName"
           value={lastname}
           onChange={(e) => setLastname(e.target.value)}
         />
-        <input className={signup.input}
+        <input
+          className={signup.input}
           required
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <input className={signup.input}
+        <input
+          className={signup.input}
           required
           type="text"
           placeholder="UserName"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        <input className={signup.input}
+        <input
+          className={signup.input}
           required
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className={signup.signup_button} type="submit">Signup</button>
+        <button className={signup.signup_button} type="submit">
+          Signup
+        </button>
       </form>
       {message && <p className={signup.message}>{message}</p>}
       <Link to="/login">

@@ -1,10 +1,17 @@
 import React,{ useState, useEffect } from "react";
 import Order from "../Components/Order";
 import orders from "../Container/Css/Orders.module.css";
+import { useNavigate } from "react-router-dom";
 function Orders() {
+  let navigate = useNavigate();
+  
   const [ordersData, setOrdersData] = useState([]);
   const url = "http://103.252.95.181:8000/get-order/";
   useEffect(() => {
+    if(sessionStorage.getItem("token")== null)
+  {
+      navigate('/login');
+  }
     const fetchProfileData = async () => {
       try {
         // Gọi API để lấy thông tin của profile
