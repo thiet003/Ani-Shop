@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useLocation, useParams, useSearchParams } from "react-router-dom";
+import { useLocation, useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { DeliveryOption } from "../Components/DeliveryOption";
 import { AnimatedBackground } from "./AnimatedBackground/AnimatedBackground";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +14,24 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const ProductDetail = () => {
+  let navigate = useNavigate();
+  // Them vao gio hang
+  const addToCart = () => {
+    const productCart = {
+      product: product,
+      quantity: 1,
+    };
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let found = cart.find((p) => p.product.id === productCart.product.id);
+    if (found) {
+      found.quantity += productCart.quantity;
+    } else {
+      cart.push(productCart);
+    }
+    console.log(cart);
+    localStorage.setItem("cart", JSON.stringify(cart));
+  };
+  
   const scrollToTop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   };
@@ -166,7 +184,10 @@ export const ProductDetail = () => {
                     style={{ color: "#ffffff" }}
                   />
                 </button>
-                <button className="bg-key-primary-color w-full px-3 py-3 rounded-full text-white text-xl font-bold flex items-center justify-center hover:bg-red-400">
+                <button
+                  onClick={addToCart}
+                  className="bg-key-primary-color w-full px-3 py-3 rounded-full text-white text-xl font-bold flex items-center justify-center hover:bg-red-400"
+                >
                   Add to Cart
                   <FontAwesomeIcon
                     className="ml-3 max-2xl:hidden"

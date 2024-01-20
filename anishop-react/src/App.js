@@ -29,18 +29,24 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { Provider } from "react-redux";
 import store from "./Redux/Store";
+import Cart from "./Container/Cart/Cart";
+import CustomerInfor from "./Container/CustomerInfor";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 library.add(fas, far, faTwitter, faFontAwesome, fab);
 function App() {
   return (
     <Provider store={store}>
       <div>
+      <ToastContainer/>
         <Header />
         <div className="App flex justify-center content-center">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/shop" element={<ProductList />} />
-            <Route path="/cart" />
+            <Route path="/cart" element={<Cart />}/>
+          <Route path="/customerInfo" element={<CustomerInfor />}/>
             <Route path="/contact_us" />
             <Route path="/product/:productId" element={<ProductDetail />} />
             <Route path="/login" element={<Login />}/>

@@ -1,14 +1,17 @@
 import React from "react";
-import { useNavigate, Link, createSearchParams, useSearchParams } from "react-router-dom";
+import {
+  useNavigate,
+  Link,
+  createSearchParams,
+  useSearchParams,
+} from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { ProductList, setSearch } from "./ProductList";
-
 
 export const Header = () => {
   const navigate = useNavigate();
   const [search, setSearch] = React.useState("");
   const handleSearchClick = () => {
-    
     const searchQuery = createSearchParams({ search });
 
     navigate({
@@ -38,24 +41,29 @@ export const Header = () => {
             />
           </div>
 
-
-        <div className="search-bar relative w-4/5 mx-5">
-          <input className="rounded-lg p-4 ps-10 block w-full text-gray-900 border focus:ring-1 border-gray-300 focus:border-key-secondary-color focus:ring-blue-300 outline-none" 
-            type="text" 
-            placeholder="Items, collection & seller" required
-            onChange={e => setSearch(e.target.value)}
-          />
-          <button 
-            className="absolute end-2.5 bottom-2.5 font-medium rounded-lg text-sm px-4 py-2 bg-blue-400 text-white focus:outline-none focus:ring-blue-300 focus:ring-1 hover:bg-blue-500" 
-            type="button" 
-            onClick={handleSearchClick}
-          >
-          <FontAwesomeIcon className="mr-2" icon="fa-solid fa-magnifying-glass" fade size="lg" style={{color: "#ffffff",}} />
-            Search
-          </button>
-        </div>
-
-        
+          <div className="search-bar relative w-4/5 mx-5">
+            <input
+              className="rounded-lg p-4 ps-10 block w-full text-gray-900 border focus:ring-1 border-gray-300 focus:border-key-secondary-color focus:ring-blue-300 outline-none"
+              type="text"
+              placeholder="Items, collection & seller"
+              required
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <button
+              className="absolute end-2.5 bottom-2.5 font-medium rounded-lg text-sm px-4 py-2 bg-blue-400 text-white focus:outline-none focus:ring-blue-300 focus:ring-1 hover:bg-blue-500"
+              type="button"
+              onClick={handleSearchClick}
+            >
+              <FontAwesomeIcon
+                className="mr-2"
+                icon="fa-solid fa-magnifying-glass"
+                fade
+                size="lg"
+                style={{ color: "#ffffff" }}
+              />
+              Search
+            </button>
+          </div>
 
           <div className="user-actions flex items-center justify-center w-1/6">
             <button className="" type="button">

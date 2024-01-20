@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import profile from "./Css/Profile.module.css";
 import React, { useState, useEffect } from "react";
 function Profile() {
+  let navigate = useNavigate();
   function HandleClick(){
-    sessionStorage.setItem("token","");
-    window.location.href = "/login";
+    sessionStorage.removeItem("token");
+    navigate('/login');
   }
   const [profileData, setProfileData] = useState({
     email: "",
@@ -16,6 +18,10 @@ function Profile() {
   });
   const url = "http://103.252.95.181:8000/profile/";
   useEffect(() => {
+    if(sessionStorage.getItem("token")==null)
+  {
+      navigate('/login');
+  }
     const fetchProfileData = async () => {
       try {
         if (sessionStorage.getItem("token") === "") {

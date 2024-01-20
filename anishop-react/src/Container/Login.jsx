@@ -1,13 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, axios } from "react";
 import login from './Css/Login.module.css';
 import logo from '../asset/img/Logo.png'
+import React from "react";
 function Login() {
-  if(sessionStorage.getItem("token")!=="")
-  {
-      window.location.href = "/profile";
-  }
-  
+  let navigate = useNavigate();
+  useEffect(()=>{
+    if(sessionStorage.getItem("token")!=null)
+    {
+        navigate('/');
+    }
+  },);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
