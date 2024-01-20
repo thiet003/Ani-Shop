@@ -1,0 +1,26 @@
+.content {
+    padding: 10px 0;
+    position: relative;
+    border-bottom: 1px solid #cb9a5c;
+    margin-top: 10px;
+}
+.content p {
+    margin-right: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.content .order {
+    left: 20px;
+}
+.content .status {
+    left: 100px;
+    color: rgb(5, 92, 179);
+    font-weight: 600;
+}
+.content .time {
+    left: 250px;
+}
+.content .total_price {
+    left: 585px;
+}
