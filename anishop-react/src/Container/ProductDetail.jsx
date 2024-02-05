@@ -37,7 +37,7 @@ export const ProductDetail = () => {
   };
   scrollToTop();
   const { productId } = useParams();
-  const [product, setProducts] = useState([]);
+  const [product, setProduct] = useState([]);
 
   let imgPath = "http://103.252.95.181:8000";
   let productPath = "http://103.252.95.181:8000/product/" + productId;
@@ -51,7 +51,7 @@ export const ProductDetail = () => {
         return Response.json();
       })
       .then((data) => {
-        setProducts(data);
+        setProduct(data);
         console.log(data);
       })
       .catch((error) => {

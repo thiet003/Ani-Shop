@@ -52,7 +52,7 @@ export const Footer = () => {
                   ['My Cart', '/cart'],
                   ['Checkout', '/checkout'],
                   ['Login', '/login'],
-                  ['Register', '/register'],
+                  ['Signup', '/signup'],
                 ].map(([title, link]) => (
                   <li key={title}><span className="text-white font-sans font-thin text-lg hover:ml-3 hover:font-medium transition-all duration-150 ease-in-out"><Link to={link}>{title}</Link></span></li>
                 ))}

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import Sort from "./Sort";
 import Paging from "./Paging";
+import { AnimatedBackground } from "../Container/AnimatedBackground/AnimatedBackground";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Category from "./Category";
 import {
@@ -143,22 +146,43 @@ export const ProductList = () => {
     indexOfLastProduct
   );
 
+
+
+  const addToCart = (product) => {
+    const productCart = {
+      product: product,
+      quantity: 1,
+    };
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let found = cart.find((p) => p.product.id === productCart.product.id);
+    if (found) {
+      found.quantity += productCart.quantity;
+    } else {
+      cart.push(productCart);
+    }
+    console.log(cart);
+    localStorage.setItem("cart", JSON.stringify(cart));
+  };
+
+  const priceStandardized = (price) => {
+    // return price;
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  };
+
   return (
     <>
-      {/* <SearchBar setSearch={setSearch} /> */}
-      <Category
-        categories={categories}
-        setSelectedCategory={setSelectedCategory}
-      />
-      <Sort setSort={setSort} />
-
-      <div className="grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4 m-4">
+    <div>
+      <div className="bg-white border-collapse sticky">
+        <Category categories={categories} setSelectedCategory={setSelectedCategory} />
+        <Sort setSort={setSort} />
+      </div>
+      <div className="grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4 m-4 bg-tranparent">
         {currentProducts
           .slice(indexOfFirstProduct, indexOfLastProduct)
           .map((product) => (
             <div
               key={product.id}
-              className="border p-4 m-4 hover:scale-105 hover:bg-gray-400 transition-all duration-150 ease-in-out rounded-3xl cursor-pointer"
+              className="border p-4 m-4 hover:scale-105 bg-white hover:bg-gray-200 hover:ring-blue-300 hover:ring-1 transition-all duration-150 ease-in-out rounded-3xl cursor-pointer"
               onClick={() => handleClick(product.id)}
             >
               <img
@@ -168,17 +192,15 @@ export const ProductList = () => {
               />
               <h1>{product.product_name}</h1>
               <h1>{product.price}</h1>
+              
             </div>
           ))}
       </div>
-
-      <Paging
-        itemsPerPage={itemsPerPage}
-        totalItems={filteredProducts.length}
-        setPage={setPage}
-        setItemsPerPage={setItemsPerPage}
-        currentPage={currentPage}
-      />
+      <div>
+        <Paging itemsPerPage={itemsPerPage} totalItems={filteredProducts.length} setPage={setPage} setItemsPerPage={setItemsPerPage}  currentPage={currentPage}  />
+      </div>
+    </div>
+    <AnimatedBackground />
     </>
   );
 };

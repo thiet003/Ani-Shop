@@ -29,31 +29,32 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { Provider } from "react-redux";
 import store from "./Redux/Store";
-import Cart from "./Container/Cart/Cart";
+import Cart from "./Container/Cart";
 import CustomerInfor from "./Container/CustomerInfor";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 library.add(fas, far, faTwitter, faFontAwesome, fab);
 function App() {
   return (
     <Provider store={store}>
-      <div>
-      <ToastContainer/>
+      <div className="overflow-auto h-full" >
+        <ToastContainer />
         <Header />
-        <div className="App flex justify-center content-center">
+        <div className="flex justify-center content-center w-full App">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/shop" element={<ProductList />} />
-            <Route path="/cart" element={<Cart />}/>
-          <Route path="/customerInfo" element={<CustomerInfor />}/>
+            <Route path="/cart" element={<Cart />} />
+            {/* <Route path="/cart" /> */}
+            <Route path="/customerInfo" element={<CustomerInfor />} />
             <Route path="/contact_us" />
             <Route path="/product/:productId" element={<ProductDetail />} />
-            <Route path="/login" element={<Login />}/>
-          <Route path="/signup" element={<Signup />}/>
-          <Route path="/profile" element={<Profile />}/>
-          <Route path="/orders" element={<Orders />}/>
-          <Route path="/order/:id" element={<OrderDetail />}/>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/order/:id" element={<OrderDetail />} />
           </Routes>
         </div>
         <Footer />

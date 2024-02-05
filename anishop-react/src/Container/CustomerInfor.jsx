@@ -58,6 +58,7 @@ function CustomerInfor() {
           throw new Error("Network response was not ok");
         }
         // Xử lý dữ liệu JSON từ phản hồi
+        console.log("add order success");
         toast.success("Đặt hàng thành công!", {
           position: "top-right",
           autoClose: 5000,
